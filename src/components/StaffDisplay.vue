@@ -51,6 +51,7 @@ function renderNote() {
 
   if (props.notes.length > 0) {
     const allNotes: StaveNote[] = []
+    const notePositions: number[] = []
 
     props.notes.forEach((note, index) => {
       const noteStr = `${note.noteName}${note.accidental}/${note.octave}`
@@ -84,13 +85,17 @@ function renderNote() {
 
     new Formatter().joinVoices([voice]).format([voice], 400)
 
+    // Store the X positions after formatting but before any shifts
+    allNotes.forEach((note) => {
+      notePositions.push(note.getAbsoluteX())
+    })
+
     allNotes.forEach((note) => {
       note.draw()
     })
 
     if (props.activeNotes.size > 0) {
-      const firstNote = allNotes[0]
-      const firstNoteX = firstNote.getAbsoluteX()
+      const firstNoteX = notePositions[0]
 
       props.activeNotes.forEach((midiNote) => {
         const played = midiToNote(midiNote)

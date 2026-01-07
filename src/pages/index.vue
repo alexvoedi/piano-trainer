@@ -2,11 +2,13 @@
 import { onMounted, ref } from 'vue'
 import StaffDisplay from '../components/StaffDisplay.vue'
 import StatsModal from '../components/StatsModal.vue'
+import { useAudio } from '../composables/useAudio'
 import { useMidi } from '../composables/useMidi'
 import { useNoteTraining } from '../composables/useNoteTraining'
 
 const { isConnected, error, onNotePressed, activeNotes } = useMidi()
 const { noteQueue, correctCount, totalCount, accuracy, checkNote, reset } = useNoteTraining()
+const { isEnabled: audioEnabled, playNote, toggleAudio } = useAudio()
 
 const showStats = ref(false)
 
@@ -14,6 +16,7 @@ onMounted(() => {
   reset()
 
   onNotePressed((midiNote) => {
+    playNote(midiNote)
     checkNote(midiNote)
   })
 })
@@ -49,6 +52,13 @@ onMounted(() => {
           <span class="font-semibold">Genauigkeit:</span> {{ accuracy }}%
         </div>
         <div class="flex gap-3">
+          <button
+            :class="audioEnabled ? 'bg-purple-500 hover:bg-purple-600' : 'bg-gray-400 hover:bg-gray-500'"
+            class="text-white font-bold py-2 px-6 rounded"
+            @click="toggleAudio"
+          >
+            {{ audioEnabled ? '🔊 Ton An' : '🔇 Ton Aus' }}
+          </button>
           <button
             class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded"
             @click="showStats = true"
