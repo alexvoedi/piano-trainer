@@ -1,11 +1,13 @@
 import { computed, ref } from 'vue'
 import { useProgress } from './useProgress'
 
+type Accidental = '' | '#' | 'b'
+
 interface Note {
   midiNote: number
   noteName: string
   octave: number
-  accidental: '' | '#' | 'b'
+  accidental: Accidental
   staffLine: number
   clef: 'treble' | 'bass'
 }
@@ -17,10 +19,24 @@ export function useNoteTraining() {
 
   const { recordAttempt, getErrorWeight } = useProgress()
 
-  const minMidi = 36
-  const maxMidi = 84
+  const minMidi = 24
+  const maxMidi = 96
 
-  const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
+  // Map MIDI note index to possible representations
+  const noteRepresentations: Record<number, Array<{ name: string, accidental: Accidental }>> = {
+    0: [{ name: 'C', accidental: '' }],
+    1: [{ name: 'C', accidental: '#' }, { name: 'D', accidental: 'b' }],
+    2: [{ name: 'D', accidental: '' }],
+    3: [{ name: 'D', accidental: '#' }, { name: 'E', accidental: 'b' }],
+    4: [{ name: 'E', accidental: '' }],
+    5: [{ name: 'F', accidental: '' }],
+    6: [{ name: 'F', accidental: '#' }, { name: 'G', accidental: 'b' }],
+    7: [{ name: 'G', accidental: '' }],
+    8: [{ name: 'G', accidental: '#' }, { name: 'A', accidental: 'b' }],
+    9: [{ name: 'A', accidental: '' }],
+    10: [{ name: 'A', accidental: '#' }, { name: 'B', accidental: 'b' }],
+    11: [{ name: 'B', accidental: '' }],
+  }
 
   const getStaffPosition = (midiNote: number, clef: 'treble' | 'bass'): number => {
     const c4Midi = 60
@@ -57,17 +73,19 @@ export function useNoteTraining() {
     const midiNote = selectedMidi
     const noteIndex = midiNote % 12
     const octave = Math.floor(midiNote / 12) - 1
-    const noteName = noteNames[noteIndex]
 
-    const baseNoteName = noteName.replace('#', '')
-    const accidental = noteName.includes('#') ? '#' : ''
+    // Randomly choose between sharp and flat representation for black keys
+    const possibleRepresentations = noteRepresentations[noteIndex]
+    const randomRep = possibleRepresentations[Math.floor(Math.random() * possibleRepresentations.length)]
+    const noteName = randomRep.name
+    const accidental = randomRep.accidental
 
     const clef = midiNote >= 60 ? 'treble' : 'bass'
     const staffLine = getStaffPosition(midiNote, clef)
 
     return {
       midiNote,
-      noteName: baseNoteName,
+      noteName,
       octave,
       accidental,
       staffLine,
