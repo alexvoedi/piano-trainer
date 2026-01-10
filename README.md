@@ -1,29 +1,57 @@
-# vue-vite-unocss starter template
+# Piano Trainer
 
-Inspired by [Vitesse](https://github.com/antfu/vitesse).
+A web app for practicing piano note reading with a MIDI keyboard.
 
 ## Features
 
-- [Vue 3](https://github.com/vuejs/core)
+- **WebMIDI Integration**: Direct access to connected MIDI keyboards
+- **Professional Music Notation**: Uses [VexFlow](https://github.com/0xfe/vexflow) for authentic sheet music rendering
+- **Grand Staff**: Treble and bass clefs displayed simultaneously
+- **Real-time Feedback**: Played notes are visually highlighted
+- **Progress Tracking**: Statistics on correct and incorrect answers
+- **Adaptive Difficulty**: Frequently missed notes appear more often
+- **Audio Feedback**: Optional tone playback when pressing keys
+- **Accidentals**: Supports sharps (#) and flats (♭)
+- **Extended Range**: 6 octaves from C1 to C7 (MIDI 24-96)
+- **Responsive Design**: Works on desktop, tablet, and smartphone
 
-- [Vite](https://github.com/vitejs/vite)
+## Tech Stack
 
-- [Vue Router](https://github.com/vuejs/vue-router)
+- [Vue 3](https://github.com/vuejs/core) with Composition API
+- [VexFlow](https://github.com/0xfe/vexflow) for music notation
+- [WebMIDI API](https://webaudio.github.io/web-midi-api/) for piano input
+- [VueUse](https://github.com/vueuse/vueuse) for composables
+- [TypeScript](https://www.typescriptlang.org/) for type safety
+- [Vite](https://github.com/vitejs/vite) as build tool
+- [UnoCSS](https://github.com/unocss/unocss) for styling
 
-- [Pinia](https://github.com/vuejs/pinia)
+## Development
 
-- TypeScript
+```bash
+# Install dependencies
+pnpm install
 
-- [Icons](https://iconify.design/)
+# Start dev server
+pnpm dev
 
-- [UnoCSS](https://github.com/unocss/unocss)
+# Build for production
+pnpm build
 
-- [`Components auto importing`](https://github.com/antfu/unplugin-vue-components)
+# Preview production build locally
+pnpm serve
+```
 
-- [`@vueuse/core`](https://github.com/vueuse/vueuse) and [`@vueuse/head`](https://github.com/vueuse/head)
+## Requirements
 
-- [Auto importing dependencies](https://github.com/antfu/unplugin-auto-import)
+- A MIDI piano or keyboard that can be connected via USB
+- A browser with WebMIDI support (Chrome, Edge, Opera)
 
-## GitHub Template
+## Deployment
 
-[Create a repo from this template on GitHub](https://github.com/alexvoedi/vue-vite-unocss/generate).
+The app is automatically deployed to GitHub Pages on every push to the `main` branch.
+
+Live Demo: [https://alexvoedi.github.io/piano-trainer/](https://alexvoedi.github.io/piano-trainer/)
+
+## License
+
+MIT

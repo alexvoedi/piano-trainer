@@ -1,25 +1,32 @@
 {
-  "name": "",
+  "name": "piano-trainer",
   "type": "module",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "private": true,
   "packageManager": "pnpm@10.27.0",
-  "description": "",
+  "description": "Web app for practicing piano note reading with MIDI keyboard integration",
   "author": {
-    "name": "",
-    "email": ""
+    "name": "Alex Voedi",
+    "email": "37340862+alexvoedi@users.noreply.github.com"
   },
-  "license": "UNLICENSED",
-  "homepage": "",
+  "license": "MIT",
+  "homepage": "https://alexvoedi.github.io/piano-trainer/",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/alexvoedi/piano-trainer.git"
   },
   "bugs": {
-    "url": "",
-    "email": ""
+    "url": "https://github.com/alexvoedi/piano-trainer/issues"
   },
-  "keywords": [],
+  "keywords": [
+    "piano",
+    "music",
+    "midi",
+    "training",
+    "sheet-music",
+    "vexflow",
+    "vue"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "cross-env NODE_ENV=production vite build",
