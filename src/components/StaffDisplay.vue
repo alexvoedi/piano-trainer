@@ -19,6 +19,7 @@ interface Props {
 const props = defineProps<Props>()
 
 const container = ref<HTMLDivElement | null>(null)
+const svgContainer = ref<SVGElement | null>(null)
 
 function midiToNote(midi: number) {
   const noteNames = ['C', 'C#', 'D', 'D#', 'E', 'F', 'F#', 'G', 'G#', 'A', 'A#', 'B']
@@ -37,17 +38,26 @@ function renderNote() {
   container.value.innerHTML = ''
 
   const renderer = new Renderer(container.value, Renderer.Backends.SVG)
-  renderer.resize(1200, 450)
+  renderer.resize(600, 400)
   const context = renderer.getContext()
-  context.scale(2, 2)
 
-  const trebleStave = new Stave(10, 30, 570)
+  const trebleStave = new Stave(10, 80, 570)
   trebleStave.addClef('treble')
   trebleStave.setContext(context).draw()
 
-  const bassStave = new Stave(10, 90, 570)
+  const bassStave = new Stave(10, 220, 570)
   bassStave.addClef('bass')
   bassStave.setContext(context).draw()
+
+  // Store reference to SVG for responsiveness
+  const svg = container.value.querySelector('svg')
+  if (svg) {
+    svgContainer.value = svg as SVGElement
+    svg.setAttribute('viewBox', '0 0 600 400')
+    svg.setAttribute('preserveAspectRatio', 'xMidYMid meet')
+    svg.style.width = '100%'
+    svg.style.height = 'auto'
+  }
 
   if (props.notes.length > 0) {
     const allNotes: StaveNote[] = []
@@ -83,7 +93,7 @@ function renderNote() {
     const voice = new Voice({ numBeats: allNotes.length, beatValue: 4 })
     voice.addTickables(allNotes)
 
-    new Formatter().joinVoices([voice]).format([voice], 400)
+    new Formatter().joinVoices([voice]).format([voice], 450)
 
     // Store the X positions after formatting but before any shifts
     allNotes.forEach((note) => {
