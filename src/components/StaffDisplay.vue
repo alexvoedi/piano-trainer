@@ -38,14 +38,14 @@ function renderNote() {
   container.value.innerHTML = ''
 
   const renderer = new Renderer(container.value, Renderer.Backends.SVG)
-  renderer.resize(600, 400)
+  renderer.resize(600, 300)
   const context = renderer.getContext()
 
-  const trebleStave = new Stave(10, 80, 570)
+  const trebleStave = new Stave(10, 60, 570)
   trebleStave.addClef('treble')
   trebleStave.setContext(context).draw()
 
-  const bassStave = new Stave(10, 220, 570)
+  const bassStave = new Stave(10, 120, 570)
   bassStave.addClef('bass')
   bassStave.setContext(context).draw()
 
@@ -53,7 +53,7 @@ function renderNote() {
   const svg = container.value.querySelector('svg')
   if (svg) {
     svgContainer.value = svg as SVGElement
-    svg.setAttribute('viewBox', '0 0 600 400')
+    svg.setAttribute('viewBox', '0 0 600 300')
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet')
     svg.style.width = '100%'
     svg.style.height = '100%'
