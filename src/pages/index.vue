@@ -32,55 +32,61 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="min-h-screen flex flex-col items-center justify-center bg-gray-50 p-8">
-    <div class="max-w-full w-full px-4">
-      <h1 class="text-4xl font-bold text-center mb-8">
+  <div class="h-screen flex flex-col bg-gray-50 p-4 md:p-6">
+    <div class="flex-shrink-0">
+      <h1 class="text-2xl md:text-4xl font-bold text-center mb-4">
         Piano Notentrainer
       </h1>
 
-      <div v-if="!isConnected" class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-6">
+      <div v-if="!isConnected" class="bg-yellow-100 border border-yellow-400 text-yellow-700 px-4 py-3 rounded mb-4">
         <p class="font-bold">
           MIDI-Gerät nicht verbunden
         </p>
         <p>Bitte schließe dein Piano an und erlaube den MIDI-Zugriff.</p>
       </div>
 
-      <div v-if="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-6">
+      <div v-if="error" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
         {{ error }}
       </div>
+    </div>
 
-      <div class="bg-white rounded-lg shadow-lg p-8 mb-6">
-        <StaffDisplay :notes="noteQueue" :active-notes="activeNotes" />
+    <div class="flex-1 flex flex-col min-h-0 mb-4 overflow-hidden">
+      <div class="bg-white rounded-lg shadow-lg p-4 md:p-6 flex-1 flex items-center justify-center min-h-0 overflow-hidden">
+        <div class="w-full h-full max-w-full max-h-full flex items-center justify-center">
+          <StaffDisplay :notes="noteQueue" :active-notes="activeNotes" />
+        </div>
       </div>
+    </div>
 
-      <div class="flex justify-between items-center bg-white rounded-lg shadow-lg p-6">
-        <div class="text-lg">
+    <div class="flex-shrink-0 flex flex-col sm:flex-row justify-between items-center bg-white rounded-lg shadow-lg p-4 gap-4">
+      <div class="flex gap-4 text-sm md:text-base">
+        <div>
           <span class="font-semibold">Richtig:</span> {{ correctCount }} / {{ totalCount }}
         </div>
-        <div class="text-lg">
+        <div>
           <span class="font-semibold">Genauigkeit:</span> {{ accuracy }}%
         </div>
-        <div class="flex gap-3">
-          <button
-            :class="audioEnabled ? 'bg-purple-500 hover:bg-purple-600' : 'bg-gray-400 hover:bg-gray-500'"
-            class="text-white font-bold py-2 px-6 rounded"
-            @click="toggleAudio"
-          >
-            {{ audioEnabled ? '🔊 Ton An' : '🔇 Ton Aus' }}
-          </button>
-          <button
-            class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-6 rounded"
-            @click="showStats = true"
-          >
-            Statistiken
-          </button>
-          <button
-            class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-6 rounded"
-            @click="reset"
-          >
-            Zurücksetzen
-          </button>
-        </div>
+      </div>
+      <div class="flex flex-wrap gap-2 justify-center">
+        <button
+          :class="audioEnabled ? 'bg-purple-500 hover:bg-purple-600' : 'bg-gray-400 hover:bg-gray-500'"
+          class="text-white font-bold py-2 px-4 rounded text-sm"
+          @click="toggleAudio"
+        >
+          {{ audioEnabled ? '🔊 Ton An' : '🔇 Ton Aus' }}
+        </button>
+        <button
+          class="bg-green-500 hover:bg-green-600 text-white font-bold py-2 px-4 rounded text-sm"
+          @click="showStats = true"
+        >
+          Statistiken
+        </button>
+        <button
+          class="bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded text-sm"
+          @click="reset"
+        >
+          Zurücksetzen
+        </button>
       </div>
     </div>
 

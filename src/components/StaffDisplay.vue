@@ -56,7 +56,10 @@ function renderNote() {
     svg.setAttribute('viewBox', '0 0 600 400')
     svg.setAttribute('preserveAspectRatio', 'xMidYMid meet')
     svg.style.width = '100%'
-    svg.style.height = 'auto'
+    svg.style.height = '100%'
+    svg.style.maxWidth = '100%'
+    svg.style.maxHeight = '100%'
+    svg.style.objectFit = 'contain'
   }
 
   if (props.notes.length > 0) {
@@ -153,5 +156,5 @@ watch([() => props.notes, () => props.activeNotes], () => {
 </script>
 
 <template>
-  <div ref="container" />
+  <div ref="container" class="w-full h-full max-w-full max-h-full flex items-center justify-center" />
 </template>
