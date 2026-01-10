@@ -37,7 +37,15 @@ export function useProgress() {
     if (!stats || stats.total === 0)
       return 1
 
-    return Math.max(1, (1 - successRate) * 5)
+    // Exponential weighting: penalize good performance more strongly
+    // successRate 1.0 (100%) → weight 0.1 (very low)
+    // successRate 0.9 (90%) → weight 0.25
+    // successRate 0.8 (80%) → weight 0.5
+    // successRate 0.5 (50%) → weight 3
+    // successRate 0.3 (30%) → weight 10
+    // successRate 0.0 (0%) → weight 20
+    const errorRate = 1 - successRate
+    return Math.max(0.1, (errorRate * 4) ** 2)
   }
 
   const resetProgress = () => {
