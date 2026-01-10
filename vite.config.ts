@@ -9,6 +9,9 @@ import { defineConfig } from 'vite'
 import Inspect from 'vite-plugin-inspect'
 
 export default defineConfig({
+  define: {
+    __BUILD_TIME__: JSON.stringify(new Date().toISOString()),
+  },
   base: '/piano-trainer/',
   resolve: {
     alias: {

@@ -6,11 +6,20 @@ import { useAudio } from '../composables/useAudio'
 import { useMidi } from '../composables/useMidi'
 import { useNoteTraining } from '../composables/useNoteTraining'
 
+declare const __BUILD_TIME__: string
+
 const { isConnected, error, onNotePressed, activeNotes } = useMidi()
 const { noteQueue, correctCount, totalCount, accuracy, checkNote, reset } = useNoteTraining()
 const { isEnabled: audioEnabled, playNote, toggleAudio } = useAudio()
 
 const showStats = ref(false)
+const buildTime = new Date(__BUILD_TIME__).toLocaleString('de-DE', {
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+  hour: '2-digit',
+  minute: '2-digit',
+})
 
 onMounted(() => {
   reset()
@@ -73,6 +82,10 @@ onMounted(() => {
           </button>
         </div>
       </div>
+    </div>
+
+    <div class="fixed bottom-2 right-2 text-xs text-gray-400">
+      {{ buildTime }}
     </div>
 
     <StatsModal :show="showStats" @close="showStats = false" />
